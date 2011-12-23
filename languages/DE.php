@@ -17,8 +17,8 @@ $LANG = array(
 		=> 'Keine kompatiblen Sprachdateien gefunden',
 	'Please choose a language'
 		=> 'Bitte eine Sprache auswählen',
-    'Original string'
-		=> 'Originalstring',
+    'Original text'
+		=> 'Originaltext',
 	'Translation'
 		=> 'Übersetzung',
 );

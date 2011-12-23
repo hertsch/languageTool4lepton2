@@ -1,4 +1,9 @@
 {include(file='header.lte')}
+{if $info}
+<div class="info">
+{$info}
+</div>
+{/if}
 <form id="lt" method="post" action="{$ACTION}">
   <label for="filetype">{translate( 'Which type of file do you wish to parse?' )}</label>
 	<select name="filetype" id="filetype" onchange="lt_select_filetype();return false;">

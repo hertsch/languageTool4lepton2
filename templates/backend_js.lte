@@ -39,9 +39,9 @@ jQuery(document).ready(function($) {
 	if ( jQuery('select#langfile').length )    	  jQuery('select#langfile').remove();        // algos
 	if ( jQuery('select#langfile-button').length )jQuery('select#langfile-button').remove(); // freshcat
 	if ( jQuery('select#file').length ) 		  jQuery('select#file').remove();
-	if ( jQuery('label#filename-label').length )  jQuery('label#to_lang-label').remove();
-	if ( jQuery('select#to_lang-button').length ) jQuery('select#to_lang-button').remove();
-	if ( jQuery('select#filename').length )   	  jQuery('select#to_lang').remove();
+	if ( jQuery('label#filename-label').length )  jQuery('label#filename-label').remove();
+	if ( jQuery('select#filename-button').length )jQuery('select#filename-button').remove();
+	if ( jQuery('select#filename').length )   	  jQuery('select#filename').remove();
   }
   // ----- get the list of installed modules -----
   function lt_get_modules() {
@@ -50,7 +50,7 @@ jQuery(document).ready(function($) {
 	  '{$WB_URL}/modules/language_tool/ajax/get_modules.php',
 	  function(html) {
 		jQuery('input#ltsubmit').prev().before('<label id="module-label" for="module">{translate( "Please choose a module" )}</label>').before(html);
-	    if ( typeof isDwoo == 'function' ) {
+	    if ( typeof getThemeName == 'function' ) {
 	      jQuery('form#lt').find('select#module').selectmenu({
 		    style: 'popup',
 		    width: 200,
@@ -63,9 +63,12 @@ jQuery(document).ready(function($) {
 	);
   }
   // ----- get the list of compatible language files -----
-  function lt_get_files() {
+  function lt_get_files(isCore) {
   
     if ( jQuery('div#nofiles').length ) jQuery('div#nofiles').remove();
+    if ( jQuery('label#langfile-label').length )  jQuery('label#langfile-label').remove();
+	if ( jQuery('select#langfile').length )    	  jQuery('select#langfile').remove();        // algos
+	if ( jQuery('select#langfile-button').length )jQuery('select#langfile-button').remove(); // freshcat
 
 	var token;
 	var elem;
@@ -84,6 +87,7 @@ jQuery(document).ready(function($) {
 	    type:     jQuery('select#type').val(),
 	    module:   jQuery('select#module').val(),
 	    filetype: jQuery('#filetype').val(),
+	    iscore:   isCore,
 	    leptoken: token,
 	  },
 	  function(html) {
@@ -92,7 +96,7 @@ jQuery(document).ready(function($) {
 	      jQuery('input#ltsubmit').prev().before('<label id="langfile-label" for="langfile">{translate( "Please choose a file" )}</label>');
 	      jQuery('input#ltsubmit').prev().before(html);
 	      // freshcat only
-	      if ( typeof isDwoo == 'function' ) {
+	      if ( typeof getThemeName == 'function' ) {
 	        jQuery('form#lt').find('select#langfile').selectmenu({
 		      style: 'popup',
   			  width: 200,
@@ -129,7 +133,7 @@ jQuery(document).ready(function($) {
 	  lt_get_modules();
 	}
 	else { // core
-	  lt_get_files();
+	  lt_get_files('core');
 	}
   }
   // init

@@ -33,12 +33,12 @@ if (defined('WB_PATH')) {
 $module_directory	= 'language_tool';
 $module_name		= 'LanguageTool';
 $module_function	= 'tool';
-$module_version		= '0.1';
-$module_platform	= '2.0';
+$module_version		  = '0.3';
+$module_platform	  = '2.x';
 $module_author		= 'Ralf Hertsch, Bianka Martinovic';
 $module_license		= 'copyright, all rights reserved';
 $module_license_terms	= 'usage only with written permission, use with LEPTON core is allowed';
-$module_description	= '';
+$module_description	  = 'Allows you to edit existing language files and parse your scripts for translate() calls';
 $module_guid		= "ba58b61b-6c75-44f2-9e35-535d87384fef";
 
 

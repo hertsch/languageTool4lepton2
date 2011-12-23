@@ -1,21 +1,30 @@
 {include(file='header.lte')}
-<h2>{translate('Edit existing language file')}: {$file}</h2>
-<form method="post">
-<table>
-  <thead>
-  	<tr>
-      <th class="left">{translate('Original string')}</th>
-      <th class="right">{translate('Translation')}</th>
-	</tr>
-  </thead>
-  <tbody>
+<h2>{translate('Edit existing language file')}: {$filepath}</h2>
+<form method="post" action="{$ACTION}">
+  <input type="hidden" name="type" value="{$type}" />
+  <input type="hidden" name="filetype" value="{$filetype}" />
+  <input type="hidden" name="file" value="{$file}" />
+  <input type="hidden" name="module" value="{$module}" />
+{if $filetype == 'script'}
+  <label for="outlang">{translate('Output language')}</label>
+    <select name="outlang">
+{foreach $known item}<option value="{$item}">{$item}</option>{/foreach}
+    </select><br /><br />
+{/if}
+  <ul>
 {foreach $strings key value}
-    <tr>
-      <td class="left">{$key}</td>
-      <td class="right"><input type="text" value="{translate($value)}" /></td>
-    </tr>
+    <li class="orig">
+      <label>{translate('Original text')}</label>
+      <textarea class="orig" name="orig_{$dwoo.foreach.default.index}">{$key}</textarea>
+    </li>
+    <li class="trans">
+      <label>{translate('Translation')}</label>
+      <textarea name="trans_{$dwoo.foreach.default.index}" class="trans">{translate($value)}</textarea>
+	</li>
 {/foreach}
-  </tbody>
-</table>
+  </ul>
+  <input type="submit" name="savetrans" value="{translate('Submit')}" />
+  <input type="submit" name="cancel" value="{translate('Cancel')}" />
+  
 </form>
 {include(file='footer.lte')}

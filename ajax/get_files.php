@@ -30,13 +30,17 @@ if ( isset($_GET['type']) )
 
 if ( isset($_GET['filetype']) )
 {
-    if ( isset($_GET['module']) && is_dir( sanitize_path( WB_PATH.'/'.$subdir.'/'.$_GET['module'] ) ) )
+    if ( isset($_GET['module']) && is_dir( $dirh->sanitizePath( WB_PATH.'/'.$subdir.'/'.$_GET['module'] ) ) )
 	{
 		$subdir .= '/'.$_GET['module'];
 	}
+	elseif ( isset($_GET['iscore']) )
+	{
+	    $subdir .= '/framework';
+	}
 	// get existing language files; will be checked for compatibility
     if( $_GET['filetype'] == 'lang' ) {
-		$path  = sanitize_path( WB_PATH.'/'.$subdir.'/languages' );
+		$path  = $dirh->sanitizePath( WB_PATH.'/'.$subdir.'/languages' );
 		$dirh  = @opendir($path);
 		if ( ! $dirh || ! is_resource($dirh) ) {
 			echo "<div class=\"error\">Unable to open directory [$path]!</div>";
@@ -62,10 +66,11 @@ if ( isset($_GET['filetype']) )
 	// get script files
 	elseif ( $_GET['filetype'] == 'script' )
 	{
-	    $path  = sanitize_path( WB_PATH.'/'.$subdir );
-		$files = $dirh->scanDirectory( $path, $path, true, true, array('php'), array($path.'/languages') );
+	    $path  = $dirh->sanitizePath( WB_PATH.'/'.$subdir );
+	    $dirh->setPrefix($path);
+	    $dirh->setSkipDirs(array($path.'/languages'));
+		$files = $dirh->getPHPFiles( $path );
 		if ( count( $files ) ) {
-		    natcasesort($files);
 			echo '<select name="source" id="source">'."\n";
 			foreach( $files as $file ) {
 			    echo "<option value=\"$file\">$file</option>\n";
