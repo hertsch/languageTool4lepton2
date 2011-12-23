@@ -1,0 +1,137 @@
+<script charset="utf-8" type="text/javascript">
+
+jQuery(document).ready(function($) {
+  $.extend({
+    getUrlVars: function(href){
+      var vars = [], hash;
+      var hashes = href.slice(href.indexOf('?') + 1).split('&');
+      for(var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+      }
+      return vars;
+    },
+    getUrlVar: function(href,name){
+      return $.getUrlVars(href)[name];
+    }
+  });
+});
+
+  // ----- AJAX Setup -----
+  jQuery.ajaxSetup({
+    error: function( x, e ){
+      if( x.status == 0 )           { alert('You are offline!!\n Please Check Your Network.'); }
+      else if( x.status == 404 )    { alert('Requested URL not found.');                       }
+      else if( x.status == 500 )    { alert('Internal Server Error.');                         }
+      else if( e == 'parsererror' ) { alert('Parse error');                                    }
+      else if( e == 'timeout' )     { alert('Request Time out.');                              }
+      else                          { alert('Unknown Error.\n'+x.responseText);                }
+    }
+  });
+  // ----- reset -----
+  function lt_reset_all() {
+	if ( jQuery('div#nofiles').length )           jQuery('div#nofiles').remove();
+	if ( jQuery('label#module-label').length )    jQuery('label#module-label').remove();
+	if ( jQuery('select#module').length )    	  jQuery('select#module').remove();        // algos
+	if ( jQuery('select#module-button').length )  jQuery('select#module-button').remove(); // freshcat
+	if ( jQuery('label#langfile-label').length )  jQuery('label#langfile-label').remove();
+	if ( jQuery('select#langfile').length )    	  jQuery('select#langfile').remove();        // algos
+	if ( jQuery('select#langfile-button').length )jQuery('select#langfile-button').remove(); // freshcat
+	if ( jQuery('select#file').length ) 		  jQuery('select#file').remove();
+	if ( jQuery('label#filename-label').length )  jQuery('label#to_lang-label').remove();
+	if ( jQuery('select#to_lang-button').length ) jQuery('select#to_lang-button').remove();
+	if ( jQuery('select#filename').length )   	  jQuery('select#to_lang').remove();
+  }
+  // ----- get the list of installed modules -----
+  function lt_get_modules() {
+    lt_reset_all();
+    jQuery.get(
+	  '{$WB_URL}/modules/language_tool/ajax/get_modules.php',
+	  function(html) {
+		jQuery('input#ltsubmit').prev().before('<label id="module-label" for="module">{translate( "Please choose a module" )}</label>').before(html);
+	    if ( typeof isDwoo == 'function' ) {
+	      jQuery('form#lt').find('select#module').selectmenu({
+		    style: 'popup',
+		    width: 200,
+		    icons: {
+			  primary: "ui-icon-carat-2-n-s"
+		    }
+		  });
+		}
+	  }
+	);
+  }
+  // ----- get the list of compatible language files -----
+  function lt_get_files() {
+  
+    if ( jQuery('div#nofiles').length ) jQuery('div#nofiles').remove();
+
+	var token;
+	var elem;
+	
+	if ( typeof getToken == 'function' ) {
+	  token = getToken();
+	}
+	else {
+	  token = $.getUrlVar( jQuery('body').find('a:first').attr('href'), 'leptoken' );
+	}
+	
+//alert( 'get url: ' + '{$WB_URL}/modules/language_tool/ajax/get_files.php filetype -' + jQuery('#filetype').val() + ' type -' + jQuery('select#type').val() + '- module -' + jQuery('select#module').val() + '- token -' + token + '-' );
+    jQuery.get(
+  	  '{$WB_URL}/modules/language_tool/ajax/get_files.php',
+	  {
+	    type:     jQuery('select#type').val(),
+	    module:   jQuery('select#module').val(),
+	    filetype: jQuery('#filetype').val(),
+	    leptoken: token,
+	  },
+	  function(html) {
+//alert(html);
+	    if ( jQuery(html).length ) {
+	      jQuery('input#ltsubmit').prev().before('<label id="langfile-label" for="langfile">{translate( "Please choose a file" )}</label>');
+	      jQuery('input#ltsubmit').prev().before(html);
+	      // freshcat only
+	      if ( typeof isDwoo == 'function' ) {
+	        jQuery('form#lt').find('select#langfile').selectmenu({
+		      style: 'popup',
+  			  width: 200,
+			  icons: {
+		  	    primary: "ui-icon-carat-2-n-s"
+			  }
+		    });
+		    jQuery('form#lt').find('select#source').selectmenu({
+		      style: 'popup',
+  			  width: 200,
+			  icons: {
+		  	    primary: "ui-icon-carat-2-n-s"
+			  }
+		    });
+		  }
+		}
+		else {
+          jQuery('input#ltsubmit').prev().before('<div id="nofiles">{translate( "No compatible language files found" )}</div>');
+		}
+	  }
+	);
+	
+  }
+  // ----- change the basic file type (lang/script) -----
+  function lt_select_filetype() {
+	lt_reset_all();
+	lt_select_type();
+  }
+  // ----- change the language file type (module/core) -----
+  function lt_select_type() {
+    lt_reset_all();
+	// get module select
+	if ( jQuery('select#type').val() == 'module' ) {
+	  lt_get_modules();
+	}
+	else { // core
+	  lt_get_files();
+	}
+  }
+  // init
+  lt_select_type();
+</script>

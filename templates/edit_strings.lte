@@ -1,0 +1,21 @@
+{include(file='header.lte')}
+<h2>{translate('Edit existing language file')}: {$file}</h2>
+<form method="post">
+<table>
+  <thead>
+  	<tr>
+      <th class="left">{translate('Original string')}</th>
+      <th class="right">{translate('Translation')}</th>
+	</tr>
+  </thead>
+  <tbody>
+{foreach $strings key value}
+    <tr>
+      <td class="left">{$key}</td>
+      <td class="right"><input type="text" value="{translate($value)}" /></td>
+    </tr>
+{/foreach}
+  </tbody>
+</table>
+</form>
+{include(file='footer.lte')}

@@ -1,0 +1,16 @@
+{include(file='header.lte')}
+<form id="lt" method="post" action="{$ACTION}">
+  <label for="filetype">{translate( 'Which type of file do you wish to parse?' )}</label>
+	<select name="filetype" id="filetype" onchange="lt_select_filetype();return false;">
+      <option value="lang">{translate('Existing language file')}</option>
+      <option value="script">{translate('PHP script file')}</option>
+	</select>
+  <label for="filename">{translate( 'Please choose a language file type' )}:</label>
+    <select name="type" id="type" onchange="lt_reset_all();lt_select_type();return false;">
+	  <option value="core">{translate('Lepton core')}</option>
+	  <option value="module" selected="selected">{translate('Module')}</option>
+    </select><br />
+  <input type="submit" name="ltsubmit" id="ltsubmit" value="{translate('Submit')}" />
+</form>
+{include(file='backend_js.lte')}
+{include(file='footer.lte')}
