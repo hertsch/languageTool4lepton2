@@ -8,7 +8,7 @@
  * @link            http://www.LEPTON-cms.org
  * @license         copyright, all rights reserved
  * @license_terms   please see info.php of this module
- * @version         $Id: info.php 1240 2011-10-21 12:24:40Z frankh $
+ * @version         $Id$
  *
  */
 
@@ -33,7 +33,7 @@ if (defined('WB_PATH')) {
 $module_directory	= 'language_tool';
 $module_name		= 'LanguageTool';
 $module_function	= 'tool';
-$module_version		= '0.4';
+$module_version		= '0.6';
 $module_platform	= '2.x';
 $module_author		= 'Bianka Martinovic';
 $module_license		= 'copyright, all rights reserved';

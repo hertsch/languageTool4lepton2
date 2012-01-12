@@ -38,24 +38,19 @@
   <input type="hidden" name="targetlang" value="{$targetlang}" />
   <input type="hidden" name="savetrans" value="1" />
   
-{if $filetype == 'script'}
-  <label for="outlang">{translate('Save to language file')}</label>
-    <select name="outlang" id="outlang">
-{foreach $known item}<option value="{$item}"{if $item == $targetlang} selected="selected"{/if}>{$item}</option>{/foreach}
-    </select><br /><br />
-{/if}
   <table>
     <thead>
       <tr>
-        <th>{translate('Original text')}</th>
-        <th>{translate('Translation')}</th>
+        <th style="width:50%">{translate('Original text')}</th>
+        <th style="width:50%">{translate('Translation')}</th>
 	  </tr>
 	</thead>
 	<tbody>
-{foreach $strings key value}
+{foreach $allstrings key value}
 	  <tr>
         <td class="orig">
       	  <textarea class="orig{if in_array($value,$missingleft)} missingleft{/if}" name="orig_{$dwoo.foreach.default.index}">{$value}</textarea>
+      	  {if isset($lines.$value)}<span style="font-size:0.8em;">{translate('Line')}: {$lines.$value}</span>{/if}
         </td>
     	<td class="trans">
       	  <textarea name="trans_{$dwoo.foreach.default.index}"
@@ -65,6 +60,15 @@
 {/foreach}
     </tbody>
   </table>
+  
+{if $filetype == 'script'}
+  <div>
+    <label class="alright" for="outlang">{translate('Save to language file')}</label>
+      <select name="outlang" id="outlang">
+{foreach $known item}<option value="{$item}"{if $item == $targetlang} selected="selected"{/if}>{$item}</option>{/foreach}
+      </select>
+  </div>
+{/if}
   <input type="submit" name="ltsubmit" value="{translate('Submit')}" />
   <input type="submit" name="cancel" value="{translate('Cancel')}" />
   

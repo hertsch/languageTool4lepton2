@@ -9,7 +9,7 @@
   <input type="hidden" name="leptoken" value="{$leptoken}" />
   
   <div id="divfiletype">
-    <label for="filetype">{translate( 'Which type of file do you wish to parse?' )}</label>
+    <label class="alright" for="filetype">{translate( 'Which type of file do you wish to parse?' )}</label>
 	  <select name="filetype" id="filetype" onchange="lt_reset_all();lt_select_filetype();return false;">
         <option value="lang">{translate('Existing language file')}</option>
         <option value="script">{translate('PHP script file')}</option>
@@ -18,7 +18,7 @@
   </div>
 
   <div id="divfilename">
-    <label for="filename">{translate( 'Please choose a language file type' )}:</label>
+    <label class="alright" for="filename">{translate( 'Please choose a language file type' )}:</label>
       <select name="type" id="type" onchange="lt_reset_all();lt_select_type();return false;">
 	    <option value="core">{translate('Lepton core')}</option>
 	    <option value="module" selected="selected">{translate('Module')}</option>
@@ -28,14 +28,14 @@
   <div id="divmodules"></div>
   
   <div id="divlangfile">
-    <label id="langfile-label" for="langfile">{translate( "Please choose a file" )}:</label>
+    <label class="alright" id="langfile-label" for="langfile">{translate( "Please choose a file" )}:</label>
       <select name="module" id="module" onchange="lt_get_files();">
     
       </select>
   </div>
     
   <div style="display:none" id="targetlang">
-    <label id="targetlang-label" for="targetlang">{translate( "Please choose a target language" )}:</label>
+    <label class="alright" id="targetlang-label" for="targetlang">{translate( "Please choose a target language" )}:</label>
       <select name="targetlang">
         <option value=""></option>
 {foreach $known item}<option value="{$item}">{$item}</option>{/foreach}

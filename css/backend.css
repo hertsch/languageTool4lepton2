@@ -6,13 +6,11 @@ div#langtool .right{width:60%;}
 
 /* edit form */
 div#langtool div#legend {width:50%;float:right;margin-top:-40px;}
-div#langtool textarea{width:98%;margin-bottom:15px;}
+div#langtool textarea{width:98%;margin-top:15px;}
 div#langtool .missingright{border:1px solid #660033;background-color:#FFCCCC;}
 div#langtool .missingleft{border:1px solid #ff6600;background-color:#FFffCC;}
 
-
-
-div#langtool label {font-weight:bold;width:350px;display:inline-block;float:left;text-align:right;margin-right:15px;}
+div#langtool label.alright {font-weight:bold;width:350px;display:inline-block;float:left;text-align:right;margin-right:15px;}
 
 
 

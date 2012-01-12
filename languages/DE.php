@@ -19,6 +19,8 @@ $LANG = array(
 		=> 'Gefunden',
 	'Target language'
 	    => 'Zielsprache',
+    'Save to language file'
+        => 'In Sprachdatei speichern',
     'Existing language file'
 		=> 'Eine existierende Sprachdatei',
     'Edit existing language file'

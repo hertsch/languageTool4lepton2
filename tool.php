@@ -46,7 +46,7 @@ if ( isset($_REQUEST['ltsubmit']) ) {
 	$strings        = array();
 	$targetstrings  = array();
 	$sourcestrings  = array();
-
+	$lines          = array();
 
 	$filetype 		= ( isset($_POST['filetype']) && $_POST['filetype'] != '' )
 	            	? $_POST['filetype']
@@ -119,6 +119,7 @@ if ( isset($_REQUEST['ltsubmit']) ) {
 		                'html'  => htmlentities($item['text']),
 		                'plain' => $item['text']
 					  );
+				$lines[$item['text']] = $item['line'];
 		    }
 		}
 	}
@@ -164,7 +165,8 @@ if ( isset($_REQUEST['ltsubmit']) ) {
 			array_merge(
 			    $_POST,
 				array(
-					'strings'       => $allstrings,
+					'allstrings'    => $allstrings,
+					'lines'         => $lines,
 					'targetstrings' => $targetstrings,
 					'missingright'  => $missing_right,
 					'missingleft'   => $missing_left,
@@ -200,7 +202,7 @@ function lt_save_trans()
 		$infile;
 		
 	$path    = sanitize_path( LEPTON_PATH.'/'.($type=='module'?'modules/'.$_POST['module']:'framework').'/languages' );
-	$outfile = sanitize_path( $path.'/'.$_POST['targetlang'].'.php.test' );
+	$outfile = sanitize_path( $path.'/'.((isset($_POST['outlang'])&&$_POST['outlang']!='')?$_POST['outlang']:$_POST['targetlang']).'.php.test' );
 	$isnew   = true;
 	if ( file_exists( $outfile ) )
 	{
