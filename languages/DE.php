@@ -11,8 +11,12 @@ $LANG = array(
 		=> 'Eine PHP Scriptdatei',
 	'Please choose a module'
 		=> 'Bitte ein Modul auswählen',
+	'Please choose a file'
+		=> 'Bitte eine Datei auswählen',
     'Please choose a language file type'
 		=> 'Bitte wählen Sie den Sprachdatei-Typ',
+	'Please choose a target language'
+	    => 'Bitte wählen Sie die Zielsprache',
     'No compatible language files found'
 		=> 'Keine kompatiblen Sprachdateien gefunden',
 	'Please choose a language'
@@ -21,6 +25,11 @@ $LANG = array(
 		=> 'Originaltext',
 	'Translation'
 		=> 'Übersetzung',
+ 	'The string is missing in the target language file'
+ 	    => 'Der String fehlt in der Ziel-Sprachdatei',
+    'The string found in the target language file, but not in the source file (but it may be used in another file...)'
+		=> 'Der String wurde in der Ziel-Sprachdatei gefunden, jedoch nicht in der Quelldatei (möglicherweise wird er aber woanders verwendet...)',
+		
 );
 
 ?>

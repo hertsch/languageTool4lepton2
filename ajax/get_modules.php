@@ -28,7 +28,7 @@ if ( count( $modules ) ) {
 	foreach( $modules as $mod ) {
 	    echo "<option value=\"$mod\">$mod</option>\n";
 	}
-    echo "</select>\n";
+    echo "</select><br />\n";
 }
 
 ?>

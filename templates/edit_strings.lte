@@ -1,5 +1,13 @@
 {include(file='header.lte')}
+<a href="{$ACTION}">&laquo; {translate('Back')} &laquo;</a><br /><br />
 <h2>{translate('Edit existing language file')}: {$filepath}</h2>
+
+<div id="legend">
+  <span style="display:inline-block;width:15px;" class="missingright">&nbsp;</span>
+	{translate('The string is missing in the target language file')}<br />
+  <span style="display:inline-block;width:15px;" class="missingleft">&nbsp;</span>
+	{translate('The string found in the target language file, but not in the source file (but it may be used in another file...)')}
+</div><br /><br />
 <form method="post" action="{$ACTION}">
   <input type="hidden" name="type" value="{$type}" />
   <input type="hidden" name="filetype" value="{$filetype}" />
@@ -11,18 +19,27 @@
 {foreach $known item}<option value="{$item}">{$item}</option>{/foreach}
     </select><br /><br />
 {/if}
-  <ul>
+  <table>
+    <thead>
+      <tr>
+        <th>{translate('Original text')}</th>
+        <th>{translate('Translation')}</th>
+	  </tr>
+	</thead>
+	<tbody>
 {foreach $strings key value}
-    <li class="orig">
-      <label>{translate('Original text')}</label>
-      <textarea class="orig" name="orig_{$dwoo.foreach.default.index}">{$key}</textarea>
-    </li>
-    <li class="trans">
-      <label>{translate('Translation')}</label>
-      <textarea name="trans_{$dwoo.foreach.default.index}" class="trans">{translate($value)}</textarea>
-	</li>
+	  <tr>
+        <td class="orig">
+      	  <textarea class="orig{if in_array($value,$missingleft)} missingleft{/if}" name="orig_{$dwoo.foreach.default.index}">{$value}</textarea>
+        </td>
+    	<td class="trans">
+      	  <textarea name="trans_{$dwoo.foreach.default.index}"
+	  		class="trans{if in_array($value,$missingright)} missingright{/if}">{if array_key_exists($value,$targetstrings)}{$targetstrings.$value}{else}{translate($value)}{/if}</textarea>
+		</td>
+	  </tr>
 {/foreach}
-  </ul>
+    </tbody>
+  </table>
   <input type="submit" name="savetrans" value="{translate('Submit')}" />
   <input type="submit" name="cancel" value="{translate('Cancel')}" />
   

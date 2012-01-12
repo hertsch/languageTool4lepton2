@@ -75,7 +75,7 @@ if ( isset($_GET['filetype']) )
 			foreach( $files as $file ) {
 			    echo "<option value=\"$file\">$file</option>\n";
 			}
-		    echo "</select>\n";
+		    echo "</select><br />\n";
 		}
 	}
 }
@@ -89,7 +89,7 @@ if ( count( $langs ) ) {
 	foreach( $langs as $lang ) {
 	    echo "<option value=\"$lang\">$lang</option>\n";
 	}
-    echo "</select>\n";
+    echo "</select><br />\n";
 }
 
 ?>
