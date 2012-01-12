@@ -3,6 +3,22 @@
 $LANG = array(
     'Which type of file do you wish to parse?'
 		=> 'Welche Art von Datei möchten Sie bearbeiten?',
+	'Language file type'
+	    => 'Quelle',
+    'Source file type'
+        => 'Typ der Quelle',
+	'module'
+	    => 'Modul',
+	'core'
+	    => 'Lepton Core',
+	'tpl'
+	    => 'Template',
+	'File'
+		=> 'Datei',
+	'Matches'
+		=> 'Gefunden',
+	'Target language'
+	    => 'Zielsprache',
     'Existing language file'
 		=> 'Eine existierende Sprachdatei',
     'Edit existing language file'

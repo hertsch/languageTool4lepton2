@@ -1,10 +1,19 @@
 div#langtool table {width:100%;}
-div#langtool th{text-align:left;font-weight:bold;background-color:#009900;padding:5px 0px;}
-div#langtool td{padding:5px 0px;}
+div#langtool th{text-align:left;font-weight:bold;color:white;padding:5px;background-image:url(brushed_alu_dark.png);}
+div#langtool td{padding:5px;background-color:white;}
 div#langtool .left{width:40%;}
 div#langtool .right{width:60%;}
 
+/* edit form */
+div#langtool div#legend {width:50%;float:right;margin-top:-40px;}
 div#langtool textarea{width:98%;margin-bottom:15px;}
-
 div#langtool .missingright{border:1px solid #660033;background-color:#FFCCCC;}
 div#langtool .missingleft{border:1px solid #ff6600;background-color:#FFffCC;}
+
+
+
+div#langtool label {font-weight:bold;width:350px;display:inline-block;float:left;text-align:right;margin-right:15px;}
+
+
+
+

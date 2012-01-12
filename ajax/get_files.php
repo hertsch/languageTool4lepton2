@@ -30,7 +30,8 @@ if ( isset($_GET['type']) )
 
 if ( isset($_GET['filetype']) )
 {
-    if ( isset($_GET['module']) && is_dir( $dirh->sanitizePath( WB_PATH.'/'.$subdir.'/'.$_GET['module'] ) ) )
+
+    if ( isset($_GET['module']) && $_GET['module'] != '' && is_dir( $dirh->sanitizePath( LEPTON_PATH.'/'.$subdir.'/'.$_GET['module'] ) ) )
 	{
 		$subdir .= '/'.$_GET['module'];
 	}
@@ -38,9 +39,10 @@ if ( isset($_GET['filetype']) )
 	{
 	    $subdir .= '/framework';
 	}
+	
 	// get existing language files; will be checked for compatibility
     if( $_GET['filetype'] == 'lang' ) {
-		$path  = $dirh->sanitizePath( WB_PATH.'/'.$subdir.'/languages' );
+		$path  = $dirh->sanitizePath( LEPTON_PATH.'/'.$subdir.'/languages' );
 		$dirh  = @opendir($path);
 		if ( ! $dirh || ! is_resource($dirh) ) {
 			echo "<div class=\"error\">Unable to open directory [$path]!</div>";
@@ -63,19 +65,31 @@ if ( isset($_GET['filetype']) )
 			}
 		}
 	}
-	// get script files
-	elseif ( $_GET['filetype'] == 'script' )
-	{
-	    $path  = $dirh->sanitizePath( WB_PATH.'/'.$subdir );
-	    $dirh->setPrefix($path);
-	    $dirh->setSkipDirs(array($path.'/languages'));
-		$files = $dirh->getPHPFiles( $path );
+	else {
+		// get template files
+		if ( $_GET['filetype'] == 'tpl' )
+		{
+		    $path  = $dirh->sanitizePath( LEPTON_PATH.'/'.$subdir.'/templates' );
+		    $files = $dirh->getTemplateFiles( $path, $path );
+		}
+		// get script files
+		elseif ( $_GET['filetype'] == 'script' )
+		{
+		    $path  = $dirh->sanitizePath( LEPTON_PATH.'/'.$subdir );
+		    $dirh->setPrefix($path);
+		    $dirh->setSkipDirs(array($path.'/languages'));
+			$files = $dirh->getPHPFiles( $path, $path );
+		}
 		if ( count( $files ) ) {
-			echo '<select name="source" id="source">'."\n";
+			echo '<label id="source-label" for="source">',
+		 		 $lang->translate( "Please choose a file" ),
+		 		 ':</label>',
+				 '<select name="source" id="source">'."\n"
+				 ;
 			foreach( $files as $file ) {
 			    echo "<option value=\"$file\">$file</option>\n";
 			}
-		    echo "</select><br />\n";
+		    echo "</select>\n";
 		}
 	}
 }
@@ -85,11 +99,14 @@ else {
 
 if ( count( $langs ) ) {
     natcasesort($langs);
-	echo '<select name="langfile" id="langfile">'."\n";
+	echo '<label id="langfile-label" for="langfile">',
+		 $lang->translate( "Please choose a file" ),
+		 ':</label>',
+		 '<select name="langfile" id="langfile">'."\n";
 	foreach( $langs as $lang ) {
 	    echo "<option value=\"$lang\">$lang</option>\n";
 	}
-    echo "</select><br />\n";
+    echo "</select>\n";
 }
 
 ?>

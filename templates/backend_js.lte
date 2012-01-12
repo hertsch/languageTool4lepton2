@@ -1,4 +1,4 @@
-<script charset="utf-8" type="text/javascript">
+<script charset="utf-8" filetype="text/javascript">
 
 jQuery(document).ready(function($) {
   $.extend({
@@ -18,6 +18,15 @@ jQuery(document).ready(function($) {
   });
 });
 
+	var token;
+	var elem;
+	if ( typeof getToken == 'function' ) {
+	  token = getToken();
+	}
+	else {
+	  token = $.getUrlVar( jQuery('body').find('a:first').attr('href'), 'leptoken' );
+	}
+
   // ----- AJAX Setup -----
   jQuery.ajaxSetup({
     error: function( x, e ){
@@ -31,25 +40,16 @@ jQuery(document).ready(function($) {
   });
   // ----- reset -----
   function lt_reset_all() {
-	if ( jQuery('div#nofiles').length )           jQuery('div#nofiles').remove();
-	if ( jQuery('label#module-label').length )    jQuery('label#module-label').remove();
-	if ( jQuery('select#module').length )    	  jQuery('select#module').remove();        // algos
-	if ( jQuery('select#module-button').length )  jQuery('select#module-button').remove(); // freshcat
-	if ( jQuery('label#langfile-label').length )  jQuery('label#langfile-label').remove();
-	if ( jQuery('select#langfile').length )    	  jQuery('select#langfile').remove();        // algos
-	if ( jQuery('select#langfile-button').length )jQuery('select#langfile-button').remove(); // freshcat
-	if ( jQuery('select#file').length ) 		  jQuery('select#file').remove();
-	if ( jQuery('label#filename-label').length )  jQuery('label#filename-label').remove();
-	if ( jQuery('select#filename-button').length )jQuery('select#filename-button').remove();
-	if ( jQuery('select#filename').length )   	  jQuery('select#filename').remove();
+    jQuery('div#divfilename').html();
+    jQuery('div#divlangfile').html();
+    jQuery('div#nofiles').remove();
   }
   // ----- get the list of installed modules -----
   function lt_get_modules() {
-    lt_reset_all();
     jQuery.get(
 	  '{$WB_URL}/modules/language_tool/ajax/get_modules.php',
 	  function(html) {
-		jQuery('input#ltsubmit').prev().before('<label id="module-label" for="module">{translate( "Please choose a module" )}:</label>').before(html);
+	    jQuery('div#divmodules').html(html);
 	    if ( typeof getThemeName == 'function' ) {
 	      jQuery('form#lt').find('select#module').selectmenu({
 		    style: 'popup',
@@ -64,22 +64,6 @@ jQuery(document).ready(function($) {
   }
   // ----- get the list of compatible language files -----
   function lt_get_files(isCore) {
-  
-    if ( jQuery('div#nofiles').length )            jQuery('div#nofiles').remove();
-    if ( jQuery('label#langfile-label').length )   jQuery('label#langfile-label').remove();
-	if ( jQuery('select#langfile').length )    	   jQuery('select#langfile').remove();        // algos
-	if ( jQuery('select#langfile-button').length ) jQuery('select#langfile-button').remove(); // freshcat
-
-	var token;
-	var elem;
-	
-	if ( typeof getToken == 'function' ) {
-	  token = getToken();
-	}
-	else {
-	  token = $.getUrlVar( jQuery('body').find('a:first').attr('href'), 'leptoken' );
-	}
-	
 //alert( 'get url: ' + '{$WB_URL}/modules/language_tool/ajax/get_files.php filetype -' + jQuery('#filetype').val() + ' type -' + jQuery('select#type').val() + '- module -' + jQuery('select#module').val() + '- token -' + token + '-' );
     jQuery.get(
   	  '{$WB_URL}/modules/language_tool/ajax/get_files.php',
@@ -91,10 +75,8 @@ jQuery(document).ready(function($) {
 	    leptoken: token,
 	  },
 	  function(html) {
-//alert(html);
 	    if ( jQuery(html).length ) {
-	      jQuery('input#ltsubmit').prev().before('<label id="langfile-label" for="langfile">{translate( "Please choose a file" )}:</label>');
-	      jQuery('input#ltsubmit').prev().before(html);
+	      jQuery('div#divlangfile').html(html);
 	      // freshcat only
 	      if ( typeof getThemeName == 'function' ) {
 	        jQuery('form#lt').find('select#langfile').selectmenu({
@@ -123,12 +105,10 @@ jQuery(document).ready(function($) {
   }
   // ----- change the basic file type (lang/script) -----
   function lt_select_filetype() {
-	lt_reset_all();
-	lt_select_type();
+    lt_select_type();
   }
   // ----- change the language file type (module/core) -----
   function lt_select_type() {
-    lt_reset_all();
 	// get module select
 	if ( jQuery('select#type').val() == 'module' ) {
 	  lt_get_modules();
@@ -138,5 +118,5 @@ jQuery(document).ready(function($) {
 	}
   }
   // init
-  lt_select_type();
+  lt_select_filetype();
 </script>
